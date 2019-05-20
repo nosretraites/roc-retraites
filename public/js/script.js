@@ -633,7 +633,7 @@ lineApp.controller('LineCtrl', LineCtrl);
 lineApp.directive('tabResult', function() {
     return {
         restrict: 'E',
-        templateUrl: '/partials/tabResult.html',
+        templateUrl: 'partials/tabResult.html',
         scope: {
             title: '=',
             data: '=',
