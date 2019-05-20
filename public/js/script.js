@@ -361,26 +361,8 @@ $scope.iface.scenarios = [
 
             $scope.calcul();
         
-
             $scope.refreshLabels();
 
-            var md = new MobileDetect(window.navigator.userAgent);
-
-if (md.tablet()!=null) {
-  if (window.innerHeight < window.innerWidth) {
-     angular.element(document).ready(function () {
-    angular.element(document.querySelector('body')).remove();
-    document.write('<img src="img/pop_mobile.png" height="287" />')
-    })
-  }
-};
-
-if (md.phone()!=null) {
-  angular.element(document).ready(function () {
-    angular.element(document.querySelector('body')).remove();
-    document.write('<img src="img/pop_mobile.png" height="287" />')
-  })
-};
     
     $scope.removeLoader();
         });
