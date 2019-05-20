@@ -1,0 +1,51 @@
+ <div class="gridItem">
+    <md-tabs  md-selected="2" class="mdTabsResult" md-dynamic-height="false" >
+       <md-tab>
+          <md-tab-label>Tableau</md-tab-label>
+          <md-tab-body>
+             <table border="1" style="height: 139px;margin-top: 50px;margin-left: 5px;">
+                <thead>
+                   <tr>
+                      <th>&nbsp;</th>
+                      <th ng-repeat="annee in years">{{annee}}</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                      <td>Législation inchangée</td>
+                      <td ng-repeat="annee in years" style="color: #FB3333; border-color:black;">
+                         {{data[1][idx[annee]]*coef|percentage}}
+                      </td>
+                   </tr>
+                   <tr>
+                      <td>Votre simulation</td>
+                      <td  ng-repeat="annee in years" style="color:rgba(51,87,205,1);  border-color:black;" >
+                         {{data[0][idx[annee]]*coef|percentage}}
+                      </td>
+                   </tr>
+                </tbody>
+             </table>
+          </md-tab-body>
+       </md-tab>
+       <md-tab>
+          <md-tab-label> Graphique</md-tab-label>
+          <md-tab-body>
+          <div>
+             <canvas  options="options" style="width:97%;margin-top: 5px;" class="chart chart-line" data="data"
+                labels="labels" legend="false" series="series"
+                click="onClick"></canvas>
+              </div>
+          </md-tab-body>
+       </md-tab>
+    </md-tabs>
+    <div class="headerTab">
+       <div class="icoHeader">
+        <md-button class=" md-mini md-accent" ng-mouseenter="show1=true" ng-mouseleave="show1=false">
+       <md-icon  md-svg-icon="svg/info.svg"></md-icon>
+      <md-tooltip md-visible="show1">{{ tooltip }}</md-tooltip>
+    </md-button>
+	</div><div class="textHeaderTab">
+       {{ title }}
+    </div>
+    </div>
+ </div>

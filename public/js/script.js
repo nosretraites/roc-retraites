@@ -1,5 +1,4 @@
 var lineApp = angular.module("app", ["chart.js", "ngMaterial", "ui.grid" , 'ngSanitize']);
-
 function DialogCtrl($scope, $mdDialog){
     $scope.hide = function() {
         $mdDialog.hide();
@@ -11,16 +10,14 @@ function DialogCtrl($scope, $mdDialog){
         $mdDialog.hide(answer);
     };
 }
-
-
-
 function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
-    // Configuration des 3 graphes 
+    // Configuration des 3 graphes
+
     $scope.charts = [];
     $scope.correspXAnnee = [];
     $scope.optionsG1 = {
-         
+
         scaleStartValue: -4,
         scaleStepWidth: 1,
         scaleOverride: true,
@@ -29,45 +26,6 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         multiTooltipTemplate: function(label) {
             return label.datasetLabel + " : " + label.value.toFixed(1).replace('.',',')+" %PIB";
         },
-       /* customTooltips: function ( tooltip ){
-            console.log($scope.correspXAnnee);
-            var tooltipEl = document.getElementById('chartjs-tooltip');
-             if (!tooltip) {
-           angular.element(tooltipEl).css({opacity: 0});
-                    return;
-                }  else {
-
-var g1 = document.getElementById('line1');
-console.log($scope.correspXAnnee[tooltip.x-10],$scope.correspXAnnee[tooltip.x-11], tooltip.x );
-tooltipEl.innerHTML = tooltip.title+" \n"+tooltip.labels[0]+"\n"+tooltip.labels[1]+"\n";
-  angular.element(this.chart.canvas).css('cursor', 'pointer');
-             var top = 0;
-      if (tooltip.yAlign) {
-        if (tooltip.yAlign == 'above') {
-          top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
-        } else {
-          top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
-        }
-      }
-            var position = g1.getBoundingClientRect();
-
-            angular.element(tooltipEl).css({opacity: 1,
-        width: tooltip.width ? (tooltip.width + 'px') : 'auto',
-        left: position.left + tooltip.x + 'px',
-        top: position.top + tooltip.y + 'px',
-        fontFamily: tooltip._fontFamily,
-        fontSize: tooltip.fontSize,
-        fontStyle: tooltip._fontStyle,
-        padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px'}); 
-
-                tooltip.text = "toto";
-
-                }
-            
-
-
-
-        }, */
         scaleLabel: "<%=value%>%",
 
     };
@@ -97,7 +55,8 @@ tooltipEl.innerHTML = tooltip.title+" \n"+tooltip.labels[0]+"\n"+tooltip.labels[
     };
 
     angular.element(document).ready(function() {
-        // Permet de changer l'apparence des slider 
+        // Permet de changer l'apparence des slider
+
         angular.forEach(['AMDR-2015', 'TPG-2015', 'RAM-2015'], function(val, key) {
             angular.element(document.querySelector('#slider' + val + ' .md-slider-wrapper .md-thumb-container .md-disabled-thumb')).remove();
             angular.element(document.querySelector('#slider' + val + ' .md-slider-wrapper .md-thumb-container .md-thumb')).remove();
@@ -113,9 +72,8 @@ tooltipEl.innerHTML = tooltip.title+" \n"+tooltip.labels[0]+"\n"+tooltip.labels[
             angular.element(slider).append('<div class="rect"></div>');
         });
 
-
     });
-    
+
     // Configuration des bornes mini et maxi des sliders.
     $scope.sliderConf = {};
     $scope.sliderConf.AMDR = {
@@ -164,6 +122,9 @@ tooltipEl.innerHTML = tooltip.title+" \n"+tooltip.labels[0]+"\n"+tooltip.labels[
     $scope.copyTPG = {};
     $scope.copyRAM = {};
 
+
+    $scope.disp.PS = [];
+
     $scope.labels = [];
     $scope.labelsS = [];
     $scope.labelsRNV = [];
@@ -179,14 +140,15 @@ tooltipEl.innerHTML = tooltip.title+" \n"+tooltip.labels[0]+"\n"+tooltip.labels[
     $scope.currentReportUrl = "http://www.cor-retraites.fr/simulateur/img/pdf/doc-4004.pdf";
 
     // Variable avec les scénarios utilisés
-$scope.iface.scenarios = [
-    {"value":"1","label":{"salaire":"+ 1,8 %","chomage":"7 %"}},
-    {"value":"2","label":{"salaire":"+ 1,5 %","chomage":"7 %"}},
-    {"value":"3","label":{"salaire":"+ 1,3 %","chomage":"7 %"}},
-    {"value":"4","label":{"salaire":"+ 1 %","chomage":"7 %"}},
-    {"value":"5","label":{"salaire":"+ 1,8 %","chomage":"4,5 %"}},
-    {"value":"6","label":{"salaire":"+ 1 %","chomage":"10 %"}} 
-  ];
+    $scope.iface.scenarios = [
+        {"value":"1","label":{"salaire":"+ 1,8 %","chomage":"7 %"}},
+        {"value":"2","label":{"salaire":"+ 1,5 %","chomage":"7 %"}},
+        {"value":"3","label":{"salaire":"+ 1,3 %","chomage":"7 %"}},
+        {"value":"4","label":{"salaire":"+ 1 %","chomage":"7 %"}},
+        {"value":"5","label":{"salaire":"+ 1,8 %","chomage":"4,5 %"}},
+        {"value":"6","label":{"salaire":"+ 1 %","chomage":"10 %"}}
+
+      ];
 
     $scope.iface.anneesUi = [$scope.dateStart, '2020', '2025', '2030', '2035', '2040', '2045', '2050', '2055', '2060', '2065', '2070'];
     $scope.years = [$scope.dateStart, "2020", "2025", "2030", "2040", "2050", "2060","2070"];
@@ -201,8 +163,6 @@ $scope.iface.scenarios = [
         $scope.dataProj = response;
         $scope.initData = response;
     });
-
-
 
     $scope.parseDataJson = function() {
         var scenario = $scope.iface.scenario;
@@ -226,9 +186,7 @@ $scope.iface.scenarios = [
 
             }
 
-
         });
-
 
         angular.forEach($scope.dataProj.T[scenario], function(val, key) {
 
@@ -248,10 +206,8 @@ $scope.iface.scenarios = [
                 var round = Math.round(val * 1000) / 10;
                 var distMark = ((round - min) * 100) / (max - min);
                 distMark = parseFloat(parseFloat(distMark).toFixed(1));
-                
+
                 angular.element(document.querySelector('#sliderTPG-' + key + ' .rect')).css('left', distMark + '%');
-
-
 
             }
 
@@ -277,23 +233,14 @@ $scope.iface.scenarios = [
 
                 angular.element(document.querySelector('#sliderRAM-' + key + ' .rect')).css('left', distMark + '%');
 
-
-
             }
-
-
 
         });
 
-      
-
-      
         angular.element(document).ready(function() {
-            
 
             angular.forEach(angular.element(document.querySelectorAll('.cellSlider')), function(e1) {
                 var slider = angular.element(e1).children().children();
-
 
                 var container = angular.element(e1).children().children().children();
                 var con = angular.element(slider).children();
@@ -304,31 +251,25 @@ $scope.iface.scenarios = [
                 }
 
             });
-               
-     
 
         });
 
     }
-    
-
-
 
     $scope.changeScenario = function() {
 
         $scope.parseDataJson();
         $scope.calcul();
         $scope.refreshLabels();
-     
+
     }
 
     $scope.refreshLabels = function() {
         $scope.labels = [];
         for (var f = $scope.dateArchive; f < $scope.dateStartInt; f++) {
-            
+
                 $scope.labels.push(f);
 
-        
         }
         for (var x = $scope.iface.anneesUi[0]; x <= $scope.iface.anneesUi[$scope.iface.anneesUi.length - 1]; x++) {
             $scope.labels.push(parseInt(x));
@@ -337,18 +278,15 @@ $scope.iface.scenarios = [
             } else {
                 $scope.labels.push('');
             } */
-        } 
+        }
+
     }
 
     $scope.convertDotToComma = function(){
         angular.element.cache=null;
           angular.forEach(angular.element(document.querySelectorAll('.md-thumb-text')), function(e1) {
-           
-          
-                   // e1.innerHTML.replace('.',',');
-                   console.log(e1.innerHTML.replace('.',','));
+
                     e1.innerHTML = e1.innerHTML.replace('.',',');
-                    console.log(e1);
               });
     }
 
@@ -360,13 +298,11 @@ $scope.iface.scenarios = [
             $scope.parseDataJson();
 
             $scope.calcul();
-        
+
             $scope.refreshLabels();
 
-    
-    $scope.removeLoader();
+        $scope.removeLoader();
         });
-        
 
     };
 
@@ -377,46 +313,39 @@ $scope.iface.scenarios = [
             main.css('display','');
     }
 
-
     $scope.calculInchange = function(annee, slider) {
         $scope.used(annee, slider);
         $scope.calcul();
 
-
     }
 
+    $scope.$on('create', function (event, chart) {
 
+        if ($scope.correspXAnnee.length == 0 ) {
 
-$scope.$on('create', function (event, chart) {
+            for(var i in chart.datasets[0].points) {
 
-    if ($scope.correspXAnnee.length == 0 ) {
-
-        for(var i in chart.datasets[0].points) {
-      
-                $scope.correspXAnnee[chart.datasets[0].points[i].x]  = chart.datasets[0].points[i].label;
+                    $scope.correspXAnnee[chart.datasets[0].points[i].x]  = chart.datasets[0].points[i].label;
+            }
         }
-    }
-   
 
-    for (var x in chart.scale.xLabels) {
-       
-        if ( (chart.scale.xLabels[x].toString()).charAt(3) != 0 && (chart.scale.xLabels[x].toString()).charAt(3) != 5 ){
-           
-            chart.scale.xLabels[x] = "";
+        for (var x in chart.scale.xLabels) {
 
-        } 
-       
-    }
-    var year = 2005;
-    for (var y in chart.datasets[0].points){
-        chart.datasets[0].points[y].label = year;
-        year ++;
-    }
+            if ( (chart.scale.xLabels[x].toString()).charAt(3) != 0 && (chart.scale.xLabels[x].toString()).charAt(3) != 5 ){
 
-  
-});
+                chart.scale.xLabels[x] = "";
+
+            }
+
+        }
+        var year = 2005;
+        for (var y in chart.datasets[0].points){
+            chart.datasets[0].points[y].label = year;
+            year ++;
+        }
+
+    });
     $scope.calcul = function() {
-
 
         var Ts = $scope.sliderTPG;
         var As = $scope.sliderAMDR;
@@ -428,20 +357,26 @@ $scope.$on('create', function (event, chart) {
         promise.then(function() {
             var dataProj = $scope.dataProj;
             var cpt = 0;
+
             $scope.disp.S[0] = [];
             $scope.disp.S[1] = [];
 
             $scope.disp.RNV[0] = [];
             $scope.disp.RNV[1] = [];
-            $scope.results.RNV[0] = [];
-            $scope.results.RNV[1] = [];
-            $scope.results.REV[0] = [];
-            $scope.results.REV[1] = [];
+            $scope.disp.RNV[0] = [];
+            $scope.disp.RNV[1] = [];
             $scope.disp.REV[0] = [];
             $scope.disp.REV[1] = [];
-            angular.forEach($scope.years, function(value, key) {
-                var x = value;  
-          
+
+            $scope.disp.PS[0] = [];
+            $scope.disp.PS[1] = [];
+
+            $scope.yearIdx = {};
+
+            for (var annee = $scope.dateArchive; annee <= $scope.dateEndInt; annee++) {
+                var x = annee.toString();
+
+                $scope.yearIdx[x] = cpt;
 
                 var NR = parseFloat(parseFloat(dataProj.NR[scenario][x]).toFixed(8));
                 var NC = parseFloat(parseFloat(dataProj.NC[scenario][x]).toFixed(8));
@@ -449,7 +384,6 @@ $scope.$on('create', function (event, chart) {
                 var T = parseFloat(dataProj.T[scenario][x] * 100);
                 var G = parseFloat(dataProj.G[scenario][x]);
                 var B = parseFloat(dataProj.B[scenario][x]);
-
 
                 var P = parseFloat(dataProj.P[scenario][x]);
                 var TCR = parseFloat(dataProj.TCR[scenario][x]);
@@ -459,7 +393,6 @@ $scope.$on('create', function (event, chart) {
                 var CNV = parseFloat(dataProj.CNV[scenario][x]);
 
                 var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
-
 
                 var AS = Number(As[x]);
                 if ($scope.slideDiff.A[x].sign == "+") {
@@ -485,190 +418,34 @@ $scope.$on('create', function (event, chart) {
                 //console.log(NR, NC, PDP, T, G, B, P, TCR, TCS, A, DP, CNV, resS0)
                 var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
 
-
                 var resS1 = B * (TS - ((NR - G * (AS - A)) / (NC + 0.5 * G * (AS - A)) * (PS + DP)));
 
-
                 // Calcul du rapport entre le niveau de vie des retraités et celui de l'ensemble de la population, simulation à partir des cibles fournies par l'utilisateur.
-                var rnv0 = P * ((1 - TCR) / (1 - TCS)) * CNV;  // A legislation inchangée
-                var rnv1 = PS * (1 - TCR) / (1 - (TCS + (TS - (T / 100)))) * CNV; //Avec vos cibles
+                var ps0 = P * ((1 - TCR) / (1 - TCS));
+                var rnv0 = ps0 * CNV;  // A legislation inchangée
+
+                var ps1 = PS * (1 - TCR) / (1 - (TCS + (TS - (T / 100))));
+                var rnv1 = ps1 * CNV; //Avec vos cibles
 
                 var ind = Math.round(Number(x) + Number(0.5) - A);
 
                 // Calcul de la part de la durée de vie totale passée à la retraite
                 var rev0 = (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - A)] - A) / (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - A)]);
                 var rev1 = (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - AS)] - AS) / (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - AS)]);
-                
 
-                $scope.results.S[1][x] = resS0;
-                $scope.results.S[0][x] = resS1;
+                $scope.disp.PS[1][cpt] = ps0;
+                $scope.disp.PS[0][cpt] = ps1;
                 $scope.disp.S[1][cpt] = resS0 * 100;
                 $scope.disp.S[0][cpt] = resS1 * 100;
-                $scope.results.RNV[1][x] = rnv0;
                 $scope.disp.RNV[1][cpt] = rnv0 * 100;
-                $scope.results.RNV[0][x] = rnv1;
                 $scope.disp.RNV[0][cpt] = rnv1 * 100;
-
-                $scope.results.REV[1][x] = parseFloat(rev0);
                 $scope.disp.REV[1][cpt] = parseFloat(rev0) * 100;
-                $scope.results.REV[0][x] = parseFloat(rev1);
                 $scope.disp.REV[0][cpt] = parseFloat(rev1) * 100;
-                // Avant : (60 + F15 - F14)/(60+F15)
-                // F15 = parseFloat(dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - A)])
-                // F14 = A 
 
-                console.log(x, rev0, rev1);
                 cpt++;
 
-
-
-            });
-        }).then(function() {
-            $scope.index = {};
-            var next = {};
-                        var last = {};
-                // On va créer un tableau avec les index
-                for (var x = $scope.dateStartInt; x <= $scope.dateEndInt; x++) {
-                    $scope.index[x] = {};
-                  
-                       if ($scope.results.S[1][x] === undefined || $scope.results.RNV[1][x] === undefined || $scope.results.REV[1][x] === undefined) {
-                        // On est pas sur un index on va chercher le dernier et le suivant
-                        $scope.index[x] = {};
-                        $scope.index[x].next = next;
-                        $scope.index[x].last = last;
-                           
-                           
-                       } else {
-                        next = {};
-                        last = {};
-                        last['i'] = {};
-                        last['v']= {};
-                        next['i'] = {};
-                         next['v'] = {};
-                         angular.forEach($scope.listeLines, function(val, key) {
-                        for (var z = 0; z < 2; z++) {
-                              var index = val.toString() + z.toString();
-                       
-                        
-                        last['i'][index] = x;
-                        last['v'][index] = $scope.results[val.toString()][z][x];
-                        next['i'][index] = parseInt($scope.years[$scope.years.indexOf(x.toString())+1]); // On calcul l'indice du prochain index;
-                        next['v'][index] = $scope.results[val.toString()][z][next['i'][index]];
-                            }
-                        });
-                    }
-                }
-             }).then(function() {
-                     for (var x = $scope.dateStartInt; x <= $scope.dateEndInt; x++) {
-
-
-                if ($scope.results.S[1][x] === undefined || $scope.results.RNV[1][x] === undefined || $scope.results.REV[1][x] === undefined) {
- 
-                    
-                    angular.forEach($scope.listeLines, function(val, key) {
-                        for (var z = 0; z < 2; z++) {
-                            $scope.results[val.toString()][z][x] = $scope.calculIntermediaire(val.toString() + z.toString(), x);
-                          
-                        }
-
-                    });
-
-                } 
-
-
-
             }
-        }).then(function() {
-
-
-             // Section ajout des données de 2005 à 2014 inclus 
-            var dataProj = $scope.dataProj;
-            var scenario = $scope.iface.scenario;
-
-            /* Comme on fait un unshitf pour l'ajout des valeurs dans le tableau disp on part de 2014 jusqu'à 2005 */
-            for (var f = $scope.dateStartInt; f >= $scope.dateArchive; f--) {
-
-                var NR = parseFloat(parseFloat(dataProj.NR[scenario][f]).toFixed(8));
-                var NC = parseFloat(parseFloat(dataProj.NC[scenario][f]).toFixed(8));
-                var PDP = parseFloat(dataProj.PdP[scenario][f]);
-                var T = parseFloat(dataProj.T[scenario][f] * 100);
-                var G = parseFloat(dataProj.G[scenario][f]);
-                var B = parseFloat(dataProj.B[scenario][f]);
-
-                var P = parseFloat(dataProj.P[scenario][f]);
-                var TCR = parseFloat(dataProj.TCR[scenario][f]);
-                var TCS = parseFloat(dataProj.TCS[scenario][f]);
-                var A = parseFloat($scope.dataProj.A[scenario][f]);
-                var DP = parseFloat(dataProj.dP[scenario][f]);
-                var CNV = parseFloat(dataProj.CNV[scenario][f]);
-
-
-                var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
-
-                var rnv0 = P * ((1 - TCR) / (1 - TCS)) * CNV;
-
-                var rev0 = (60 + parseFloat(dataProj.EV[scenario][Math.round(Number(f) + Number(0.5) - A)]) - A) / (60 + parseFloat(dataProj.EV[scenario][Math.round(Number(f) + Number(0.5) - A)]));
-                
-
-            
-                $scope.results.S[0][f] = resS0;
-                $scope.results.S[1][f]= resS0;
-
-          
-                $scope.results.REV[0][f] =rev0;
-                $scope.results.REV[1][f] = rev0;
-
-                   
-                $scope.results.RNV[0][f] =rnv0;
-                $scope.results.RNV[1][f] = rnv0;
-
-        
-
-            }
-
-
-
-       
-
-        }).then(function() {
-  
-      
-                angular.forEach($scope.listeLines, function(val, key) {
-                for (var y = 0; y < 2; y++) {
-                      if (val.toString() == 'REV') {
-                        var options = $scope.optionsG3;
-                    } else if (val.toString() == 'S') {
-                        var options = $scope.optionsG1;
-                    } else if (val.toString() == 'RNV') {
-                        var options = $scope.optionsG2;
-                    }
-
-                    var cpt = 0;
-                    var max = 0;
-                    var min = options.scaleStartValue;
-                    angular.forEach($scope.results[val.toString()][y], function(val2, key) {
-                  
-                        $scope.disp[val.toString()][y][cpt] = val2 * 100;
-
-                        if ($scope.disp[val.toString()][y][cpt] > max) {
-                            max = $scope.disp[val.toString()][y][cpt];
-                        }
-
-                        if ($scope.disp[val.toString()][y][cpt] < min) {
-                            min = $scope.disp[val.toString()][y][cpt];
-                        }
-                        cpt++;
-                    });                      
-
-                }
-
-            });
-
-
-        }).then(function(){
-          
-          
-        });
+        })
         deferred.resolve();
     }
 
@@ -687,9 +464,7 @@ $scope.$on('create', function (event, chart) {
         return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     }
 
-
     $scope.historyBack = function() {
-
 
         window.location = 'http://www.cor-retraites.fr';
     }
@@ -752,8 +527,9 @@ $scope.$on('create', function (event, chart) {
     }
 
     $scope.calculIntermediaire = function(index, x) {
-       
-        //Application de la formule 
+
+        //Application de la formule
+
         return parseFloat(($scope.index[x].next.i[index] - x) / ($scope.index[x].next.i[index] - $scope.index[x].last.i[index]) * $scope.index[x].last.v[index] + (x - $scope.index[x].last.i[index] ) / ($scope.index[x].next.i[index]  - $scope.index[x].last.i[index]) * $scope.index[x].next.v[index]);
 
     }
@@ -776,8 +552,6 @@ $scope.$on('create', function (event, chart) {
 
     }
 
-
-
     $scope.showAdvanced = function(ev) {
         $mdDialog.show({
                 controller: DialogCtrl,
@@ -796,7 +570,6 @@ $scope.$on('create', function (event, chart) {
     };
 
 }
-
 lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
 
     // Configure all charts
@@ -817,8 +590,6 @@ lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
             datasetStroke: false,
 
             //Number - Tension of the bezier curve between points
-            
-
 
         }, { // blue
             fillColor: 'rgba(0,0,0,0)',
@@ -832,11 +603,7 @@ lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
         showTooltips: true,
         hideOverflow: true
 
-
-
-
-    }); 
-
+    });
 
 }]).filter('percentage', ['$filter', function($filter) {
     return function(input, decimals) {
@@ -859,9 +626,24 @@ lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
         return ($filter('number')(input, 1) + '').replace(".",",");
     };
 }]);
-
-
 LineCtrl.$inject = ['$scope', '$http', '$q', '$window', '$mdDialog'];
 DialogCtrl.$inject = ['$scope', '$mdDialog'];
 lineApp.controller('LineCtrl', LineCtrl);
 
+lineApp.directive('tabResult', function() {
+    return {
+        restrict: 'E',
+        templateUrl: '/partials/tabResult.html',
+        scope: {
+            title: '=',
+            data: '=',
+            options: '=',
+            labels: '=',
+            series: '=',
+            tooltip: '=',
+            years: '=',
+            idx: '=',
+            coef: '='
+        }
+    };
+});
