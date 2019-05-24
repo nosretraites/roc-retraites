@@ -111,7 +111,7 @@ h2.titleStep {
 	vertical-align: middle;
 }
 canvas{
-        width: 100% !important;
+        width: 80% !important;
         max-width: 800px;
         height: auto !important;
     }
@@ -318,7 +318,7 @@ md-select-label {
 	width: 95%;
     margin: 0 auto;
 }
-#grid md-tabs {
+.grid md-tabs {
 	height: 100%;
 }
 
@@ -386,32 +386,32 @@ body {
     margin-bottom:15px;
 }
 
-#grid {
+.grid {
 	border-collapse: collapse;
 	width: 95%;
 	height: 100%;
 	margin-left: 15px;
 	border: 0px solid black;
 }
-#grid table {
+.grid table {
 	font-size: 9pt;
 }
-#grid table > thead > tr{
+.grid table > thead > tr{
 	height: 25px;
 }
-#grid table > tbody > tr{
+.grid table > tbody > tr{
 	height: 30px;
 }
 
-#grid md-tab-item .ng-scope {
+.grid md-tab-item .ng-scope {
 	text-transform: capitalize;
 	font-size: 10.4pt;
 }
 
-#grid .icon-tabs {
+.grid .icon-tabs {
 	float: left;
 }
-#grid .textHeaderTab{
+.grid .textHeaderTab{
 	line-height: 0.9;
 	font-family: "Calibri",RobotoDraft,Roboto,"Helvetica Neue",sans-serif;
 	font-size: 13pt;
@@ -422,7 +422,7 @@ body {
 	    height:50px;
 }
 
-#grid .headerTab{
+.grid .headerTab{
 	display: table;
 	vertical-align: middle;
 	width: calc(100% - 226px);
@@ -433,7 +433,7 @@ body {
 
 
 }
-#grid .icon-tabs{
+.grid .icon-tabs{
 	display: table-cell;
 }
 
@@ -691,7 +691,7 @@ width: 25px;
 	border: 1px solid black;
 }
 
-#grid table {
+.grid table {
 	text-align: center;
 	background: white;
 	width: 95%;
@@ -938,19 +938,19 @@ md-slider .md-sign {
 .gridItem:last-child h2{
 	    text-align: center;
 }
-#grid md-tabs .md-tab:not(:active) {
+.grid md-tabs .md-tab:not(:active) {
     border-left: 1px solid rgba(0,0,0,0.17);
     border-bottom: 1px solid rgba(0,0,0,0.17);
 
 }
 
-#grid md-tab-item.md-active {
+.grid md-tab-item.md-active {
 	background-color: rgb(36, 63, 153);
 	color: white;
 }
 
 
-#grid .md-tab:not(.md-active) span:hover {
+.grid .md-tab:not(.md-active) span:hover {
 	font-weight: bold;
 	color: #264297;
 };
@@ -979,7 +979,7 @@ md-tooltip.tooltipCor .md-content {
 	width: 300px;
 }
 
-#grid md-icon {
+.grid md-icon {
 	width: 30px;
 	height: 30px;
 	position: absolute;
@@ -1074,7 +1074,7 @@ md-tabs {
 	background-color: #fafafa;
 }
 
-#grid md-tabs .md-tab:not(.md-active) {
+.grid md-tabs .md-tab:not(.md-active) {
     background-color: #9999cc;
 }
 
@@ -1190,13 +1190,13 @@ header{margin-top: 10px;
     bottom: 0;
     overflow: hidden;
 }
-#grid table{
+.grid table{
     height: 139px;
     margin-top: 24px !important;
     margin-left: 65px;
 }
 
-#grid .textHeaderTab {
+.grid .textHeaderTab {
 	font-size: 12pt !important;
 }
 .chart-container{
