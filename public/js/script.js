@@ -121,6 +121,10 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         REV: {}
     };
 
+    function prepareLabels(labels) {
+        return labels.map(k => parseInt(k) % 5 == 0 ? k : '');
+    }
+
     // Les données d'initialisations sont dans ce fichier JSON
     var ajax1 = $http.get('fileProjection.json').success(function(response) {
         $scope.dataProj = response;
@@ -147,12 +151,11 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 data: $scope.iface.scenarios.map(s => {
                     return Object.values($scope.dataProj[k][s.value])
                 }),
-                labels: Object.keys($scope.dataProj[k][1]),
+                labels: prepareLabels(Object.keys($scope.dataProj[k][1])),
                 series: $scope.iface.scenarios.map(s => 'salaire '+ s.label.salaire + ', chomage ' + s.label.chomage)
             }
             return v;
         }, {})
-
     });
 
     $scope.parseDataJson = function() {
@@ -310,32 +313,6 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
     }
 
-    $scope.$on('create', function (event, chart) {
-
-        if ($scope.correspXAnnee.length == 0 ) {
-
-            for(var i in chart.datasets[0].points) {
-
-                    $scope.correspXAnnee[chart.datasets[0].points[i].x]  = chart.datasets[0].points[i].label;
-            }
-        }
-
-        for (var x in chart.scale.xLabels) {
-
-            if ( (chart.scale.xLabels[x].toString()).charAt(3) != 0 && (chart.scale.xLabels[x].toString()).charAt(3) != 5 ){
-
-                chart.scale.xLabels[x] = "";
-
-            }
-
-        }
-        var year = 2005;
-        for (var y in chart.datasets[0].points){
-            chart.datasets[0].points[y].label = year;
-            year ++;
-        }
-
-    });
     $scope.calcul = function() {
 
         var Ts = $scope.sliderTPG;
@@ -563,19 +540,13 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 }
 lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
     ChartJsProvider.setOptions({
-        legend: true,
         responsive: true,
         animation: false,
+        scaleSteps: 5,
         pointDot: false,
-        //pointHitDetectionRadius : 1,
-        fill: false,
-        fillColor: 'rgba(0,0,0,0)',
         tooltipXOffset: 10,
         maintainAspectRatio: true,
-        showXLabels: 1,
-        showTooltips: true,
-        hideOverflow: true
-
+        showTooltips: true
     });
 }]);
 
