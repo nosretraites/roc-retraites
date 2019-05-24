@@ -214,58 +214,70 @@
                      <md-icon class="icoH2" md-svg-icon="svg/ico3.svg"></md-icon>
                      Visualisez les résultats de la simulation pour le système de retraite et les retraités actuels et futurs
                   </h2>
-                  <div id="grid">
-
-                  <tab-result
-                     title="'Situation financière du système de retraite'"
-                     data="disp.S"
-                     labels="labels"
-                     series="series"
-                     tooltip="'Différence entre les ressources et les dépenses du système de retraite, exprimée en proportion de la richesse nationale (Produit Intérieur Brut, ou PIB). Une valeur positive correspond à un excédent, une valeur négative à un déficit.'"
-                     idx="yearIdx"
-                     years="years"
-                  ></tab-result>
-                  <tab-result
-                     title="'Niveau de vie des retraités par rapport à l’ensemble de la population'"
-                     data="disp.RNV"
-                     labels="labels"
-                     series="series"
-                     tooltip="'Le niveau de vie rapporte, pour chaque ménage, l’ensemble de ses revenus après impôts (y compris prélèvements et transferts sociaux) à sa taille, tenant compte notamment du nombre d’enfants à charge. Une valeur supérieure à 100 % signifie que le niveau de vie des retraités est plus élevé en moyenne que celui de l’ensemble de la population, une valeur inférieure à 100 % qu’il est moins élevé.'"
-                     idx="yearIdx"
-                     years="years"
-                  ></tab-result>
-                  <tab-result
-                     title="'Durée de la vie passée à la retraite'"
-                     data="disp.REV"
-                     labels="labels"
-                     series="series"
-                     tooltip="'Durée passée à la retraite en proportion de la durée de vie totale, avec l’hypothèse que la durée de vie va continuer à augmenter au même rythme que par le passé. Elle est calculée, à une date donnée, pour la génération qui part à la retraite à cette date.'"
-                     idx="yearIdx"
-                     years="years"
-                  ></tab-result>
-                  <tab-result
-                     title="'Pension nette / salaire net'"
-                     data="disp.PS"
-                     labels="labels"
-                     series="series"
-                     tooltip="'TODO.'"
-                     idx="yearIdx"
-                     years="years"
-                  ></tab-result>
+                  <div class="grid">
+                     <tab-result
+                        title="'Situation financière du système de retraite (S)'"
+                        data="disp.S"
+                        labels="labels"
+                        series="series"
+                        tooltip="'Différence entre les ressources et les dépenses du système de retraite, exprimée en proportion de la richesse nationale (Produit Intérieur Brut, ou PIB). Une valeur positive correspond à un excédent, une valeur négative à un déficit.'"
+                        idx="yearIdx"
+                        years="years"
+                     ></tab-result>
+                     <tab-result
+                        title="'Niveau de vie des retraités par rapport à l’ensemble de la population (RNV)'"
+                        data="disp.RNV"
+                        labels="labels"
+                        series="series"
+                        tooltip="'Le niveau de vie rapporte, pour chaque ménage, l’ensemble de ses revenus après impôts (y compris prélèvements et transferts sociaux) à sa taille, tenant compte notamment du nombre d’enfants à charge. Une valeur supérieure à 100 % signifie que le niveau de vie des retraités est plus élevé en moyenne que celui de l’ensemble de la population, une valeur inférieure à 100 % qu’il est moins élevé.'"
+                        idx="yearIdx"
+                        years="years"
+                     ></tab-result>
+                     <tab-result
+                        title="'Durée de la vie passée à la retraite (REV)'"
+                        data="disp.REV"
+                        labels="labels"
+                        series="series"
+                        tooltip="'Durée passée à la retraite en proportion de la durée de vie totale, avec l’hypothèse que la durée de vie va continuer à augmenter au même rythme que par le passé. Elle est calculée, à une date donnée, pour la génération qui part à la retraite à cette date.'"
+                        idx="yearIdx"
+                        years="years"
+                     ></tab-result>
+                     <tab-result
+                        title="'Pension nette / salaire net (PS)'"
+                        data="disp.PS"
+                        labels="labels"
+                        series="series"
+                        tooltip="'TODO.'"
+                        idx="yearIdx"
+                        years="years"
+                     ></tab-result>
+                  </div>
+                  <h2 class="subtitleMain">
+                     Visualisez les données brutes
+                  </h2>
+                  <div class="grid">
+                     <div class="gridItem" ng-repeat="(k, a) in rawData">
+                        <p>{{ a.name }}</p>
+                        <canvas style="margin-top: 5px;" class="chart chart-line" data="rawData[k].data"
+                           labels="rawData[k].labels"
+                           series="rawData[k].series">
+                         </canvas>
+                     </div>
                   </div>
                   <div hide show-lg class="otherActions">
-                  <div class="rowCell">
+                     <div class="rowCell">
                         <div class="cell"  ng-click="showAdvanced($event)" flex-sm="100" flex-md="100" flex-gt-md="auto">
-                           <p>Doc</p>
-                           <md-icon class="icoOtherAction icoPlus" md-svg-icon="svg/plus.svg"></md-icon>
-                        </div>
+                              <p>Doc</p>
+                              <md-icon class="icoOtherAction icoPlus" md-svg-icon="svg/plus.svg"></md-icon>
+                           </div>
                      </div>
                      <div class="rowCell">
                         <div class="cell"  >
                            <a href="mailto:secretariat@cor-retraites.fr" target="_blank">
-                           <md-button id="mdButtonShow5" class=" md-mini md-accent" ng-mouseenter="show5=true" ng-mouseleave="show5=false">
-                    <md-tooltip md-visible="show5" md-direction="top">Nous portons la plus grande attention à vos retours pour améliorer ce simulateur.</md-tooltip>
-                           <p>Email</p><md-icon class="icoOtherAction" md-svg-icon="svg/4.svg"></md-icon></md-button></a>
+                              <md-button id="mdButtonShow5" class=" md-mini md-accent" ng-mouseenter="show5=true" ng-mouseleave="show5=false">
+                              <md-tooltip md-visible="show5" md-direction="top">Nous portons la plus grande attention à vos retours pour améliorer ce simulateur.</md-tooltip>
+                              <p>Email</p><md-icon class="icoOtherAction" md-svg-icon="svg/4.svg"></md-icon></md-button>
+                           </a>
                         </div>
                      </div>
                      <div class="rowCell">

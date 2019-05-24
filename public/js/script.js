@@ -125,6 +125,34 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     var ajax1 = $http.get('fileProjection.json').success(function(response) {
         $scope.dataProj = response;
         $scope.initData = response;
+
+        $scope.inputMeta = {
+            T: { name: 'Niveau des cotisations retraite' },
+            P: { name: 'Niveau des pensions par rapport aux salaires' },
+            A: { name: 'Âge auquel les personnes partent à la retraite' },
+            B: { name: 'Part des revenus d’activité bruts dans le PIB' },
+            NR: { name: 'Nombre de retraités de droit direct (tous régimes confondus)' },
+            NC: { name: 'Nombre de personnes en emploi (ou nombre de cotisants)' },
+            G: { name: 'Effectif moyen d’une génération arrivant aux âges de la retraite' },
+            PdP: { name: 'Autres dépenses de retraite rapportées au nombre de retraités de droit direct, en % du revenu d’activité brut moyen' },
+            TCR: { name: 'Taux des prélèvements sociaux sur les pensions de retraite' },
+            TCS: { name: 'Taux des prélèvements sociaux sur les salaires et revenus d’activité' },
+            CNV: { name: 'Coefficient pour passer du ratio « pension/salaire nets » au ratio des niveaux de vie' },
+            EV: { name: 'Espérance de vie à 60 ans par génération' },
+        }
+
+        $scope.rawData = Object.keys($scope.inputMeta).reduce((v, k) => {
+            v[k] = {
+                name: $scope.inputMeta[k].name + ' (' + k + ')',
+                data: $scope.iface.scenarios.map(s => {
+                    return Object.values($scope.dataProj[k][s.value])
+                }),
+                labels: Object.keys($scope.dataProj[k][1]),
+                series: $scope.iface.scenarios.map(s => 'salaire '+ s.label.salaire + ', chomage ' + s.label.chomage)
+            }
+            return v;
+        }, {})
+
     });
 
     $scope.parseDataJson = function() {
@@ -534,34 +562,16 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
 }
 lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
-
-    // Configure all charts
-
     ChartJsProvider.setOptions({
+        legend: true,
         responsive: true,
         animation: false,
         pointDot: false,
-        pointHitDetectionRadius : 1,
+        //pointHitDetectionRadius : 1,
+        fill: false,
+        fillColor: 'rgba(0,0,0,0)',
         tooltipXOffset: 10,
-        colours: [{ // blue
-            fillColor: 'rgba(0,0,0,0)',
-
-            strokeColor: 'rgba(51,87,205,1)',
-            pointColor: 'rgba(51,87,205,1)',
-            pointStrokeColor: 'rgba(51,87,205,1)',
-            pointHighlightFill: 'rgba(0,0,0,0)',
-            datasetStroke: false,
-
-            //Number - Tension of the bezier curve between points
-
-        }, { // blue
-            fillColor: 'rgba(0,0,0,0)',
-            strokeColor: '#FB3333',
-            pointColor: '#FB3333',
-            pointStrokeColor: '#FB3333',
-            pointHighlightFill: 'rgba(0,0,0,0)',
-        }],
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         showXLabels: 1,
         showTooltips: true,
         hideOverflow: true
