@@ -16,43 +16,6 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
     $scope.charts = [];
     $scope.correspXAnnee = [];
-    $scope.optionsG1 = {
-
-        scaleStartValue: -4,
-        scaleStepWidth: 1,
-        scaleOverride: true,
-        scaleSteps: 8,
-        bezierCurve: false,
-        multiTooltipTemplate: function(label) {
-            return label.datasetLabel + " : " + label.value.toFixed(1).replace('.',',')+" %PIB";
-        },
-        scaleLabel: "<%=value%>%",
-
-    };
-    $scope.optionsG3 = {
-        scaleStartValue: 22,
-        scaleStepWidth: 2,
-        scaleOverride: true,
-         bezierCurve: false,
-        scaleSteps: 8,
-          multiTooltipTemplate: function(label) {
-            return label.datasetLabel + " : " + label.value.toFixed(1).replace('.',',')+"%";
-        },
-         scaleLabel: "<%=value%>%"
-    };
-
-    $scope.optionsG2 = {
-        scaleStartValue: 70,
-        scaleStepWidth: 5,
-        scaleOverride: true,
-         bezierCurve: false,
-        scaleSteps: 10,
-          multiTooltipTemplate: function(label) {
-            return label.datasetLabel + " : " + label.value.toFixed(1).replace('.',',')+"%";
-        },
-                 scaleLabel: "<%=value%>%"
-
-    };
 
     angular.element(document).ready(function() {
         // Permet de changer l'apparence des slider
@@ -435,12 +398,12 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
                 $scope.disp.PS[1][cpt] = ps0;
                 $scope.disp.PS[0][cpt] = ps1;
-                $scope.disp.S[1][cpt] = resS0 * 100;
-                $scope.disp.S[0][cpt] = resS1 * 100;
-                $scope.disp.RNV[1][cpt] = rnv0 * 100;
-                $scope.disp.RNV[0][cpt] = rnv1 * 100;
-                $scope.disp.REV[1][cpt] = parseFloat(rev0) * 100;
-                $scope.disp.REV[0][cpt] = parseFloat(rev1) * 100;
+                $scope.disp.S[1][cpt] = resS0;
+                $scope.disp.S[0][cpt] = resS1;
+                $scope.disp.RNV[1][cpt] = rnv0;
+                $scope.disp.RNV[0][cpt] = rnv1;
+                $scope.disp.REV[1][cpt] = parseFloat(rev0);
+                $scope.disp.REV[0][cpt] = parseFloat(rev1);
 
                 cpt++;
 
@@ -604,28 +567,8 @@ lineApp.config(['ChartJsProvider', function(ChartJsProvider) {
         hideOverflow: true
 
     });
-
-}]).filter('percentage', ['$filter', function($filter) {
-    return function(input, decimals) {
-        return ($filter('number')(input * 100, 1) + '%').replace(".",",");
-    };
-}]).filter('floatingAge', ['$filter', function($filter) {
-    return function(input, decimals) {
-        return ($filter('number')(input, 1) + ' ans').replace(".",",");
-    };
-}]).filter('floatingPercent', ['$filter', function($filter) {
-    return function(input, decimals) {
-        return ($filter('number')(input, 1) + ' %').replace(".",",");
-    };
-}]).filter('floatingAgeRecap', ['$filter', function($filter) {
-    return function(input, decimals) {
-        return ($filter('number')(input, 1) + '').replace(".",",");
-    };
-}]).filter('floatingPercentRecap', ['$filter', function($filter) {
-    return function(input, decimals) {
-        return ($filter('number')(input, 1) + '').replace(".",",");
-    };
 }]);
+
 LineCtrl.$inject = ['$scope', '$http', '$q', '$window', '$mdDialog'];
 DialogCtrl.$inject = ['$scope', '$mdDialog'];
 lineApp.controller('LineCtrl', LineCtrl);

@@ -14,13 +14,13 @@
                    <tr>
                       <td>Législation inchangée</td>
                       <td ng-repeat="annee in years" style="color: #FB3333; border-color:black;">
-                         {{data[1][idx[annee]]*coef|percentage}}
+                         {{data[1][idx[annee]] | number}}
                       </td>
                    </tr>
                    <tr>
                       <td>Votre simulation</td>
                       <td  ng-repeat="annee in years" style="color:rgba(51,87,205,1);  border-color:black;" >
-                         {{data[0][idx[annee]]*coef|percentage}}
+                         {{data[0][idx[annee]] | number}}
                       </td>
                    </tr>
                 </tbody>
