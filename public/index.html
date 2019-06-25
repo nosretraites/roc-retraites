@@ -91,20 +91,20 @@
   </span>
                               </div>
 </div>
-                                 <div class="rowSlider"  ng-repeat="annee in  ['2017', '2020', '2025', '2030' , '2040', '2050', '2060', '2070']">
+                                 <div class="rowSlider"  ng-repeat="annee in  years">
                                      <div>
                                     <div class="cell cellYear">{{annee}}</div>
                                     <div class="cell cellSlideMoins">
-                                       <md-button ng-class="annee==2017 ? 'hideButton' : ''" ng-hide="" ng-click="slideMoins(annee, 'AMDR');" aria-label="label">
+                                       <md-button ng-class="annee==2018 ? 'hideButton' : ''" ng-hide="" ng-click="slideMoins(annee, 'AMDR');" aria-label="label">
                                           <md-icon class="" md-svg-icon="svg/moins.svg"></md-icon>
                                        </md-button>
                                     </div>
                                     <div class="cell cellSlider">
-                                       <md-slider ng-class="annee==2017 ? 'hideCursor' : ''" ng-disabled="annee==2017" md-discrete  ng-change="calculInchange(annee,'AMDR');" ng-model="sliderAMDR[annee]" min="{{sliderConf.AMDR.min}}" max="{{sliderConf.AMDR.max}}"  step="0.1" aria-label="blue" id="sliderAMDR-{{annee}}" class="md-primary">
+                                       <md-slider ng-class="annee==2018 ? 'hideCursor' : ''" ng-disabled="annee==2018" md-discrete  ng-change="calculInchange(annee,'AMDR');" ng-model="sliderAMDR[annee]" min="{{sliderConf.AMDR.min}}" max="{{sliderConf.AMDR.max}}"  step="0.1" aria-label="blue" id="sliderAMDR-{{annee}}" class="md-primary">
                                        </md-slider>
                                     </div>
                                     <div class="cell cellSlidePlus">
-                                       <md-button ng-class="annee==2017 ? 'hideButton' : ''" ng-hide="" ng-click="slidePlus(annee, 'AMDR');" aria-label="label">
+                                       <md-button ng-class="annee==2018 ? 'hideButton' : ''" ng-hide="" ng-click="slidePlus(annee, 'AMDR');" aria-label="label">
                                           <md-icon class="" md-svg-icon="svg/plus.svg"></md-icon>
                                        </md-button>
                                     </div>
@@ -131,20 +131,20 @@
   </span>
 </div>
 </div>
-                                 <div class="rowSlider" ng-repeat="annee in  ['2017', '2020', '2025', '2030', '2040', '2050', '2060', '2070']">
+                                 <div class="rowSlider" ng-repeat="annee in  years">
                                     <div>
                                     <div class="cell cellYear">{{annee}}</div>
                                     <div class="cell cellSlideMoins">
-                                       <md-button ng-class="annee==2017 ? 'hideButton' : ''" ng-hide="" ng-click="slideMoins(annee,'TPG');" aria-label="label">
+                                       <md-button ng-class="annee==2018 ? 'hideButton' : ''" ng-hide="" ng-click="slideMoins(annee,'TPG');" aria-label="label">
                                           <md-icon class="" md-svg-icon="svg/moins.svg"></md-icon>
                                        </md-button>
                                     </div>
                                     <div class="cell cellSlider">
-                                       <md-slider ng-class="annee==2017 ? 'hideCursor' : ''"  ng-disabled="annee==2017" md-discrete ng-change="calculInchange(annee,'TPG');" ng-model="sliderTPG[annee]" min="{{sliderConf.TPG.min}}" max="{{sliderConf.TPG.max}}"  step="0.1" aria-label="blue" id="sliderTPG-{{annee}}" class="md-primary">
+                                       <md-slider ng-class="annee==2018 ? 'hideCursor' : ''"  ng-disabled="annee==2018" md-discrete ng-change="calculInchange(annee,'TPG');" ng-model="sliderTPG[annee]" min="{{sliderConf.TPG.min}}" max="{{sliderConf.TPG.max}}"  step="0.1" aria-label="blue" id="sliderTPG-{{annee}}" class="md-primary">
                                        </md-slider>
                                     </div>
                                     <div class="cell cellSlidePlus">
-                                       <md-button ng-class="annee==2017 ? 'hideButton' : ''" ng-hide="" ng-click="slidePlus(annee, 'TPG');" aria-label="label">
+                                       <md-button ng-class="annee==2018 ? 'hideButton' : ''" ng-hide="" ng-click="slidePlus(annee, 'TPG');" aria-label="label">
                                           <md-icon class="" md-svg-icon="svg/plus.svg"></md-icon>
                                        </md-button>
                                     </div>
@@ -170,20 +170,20 @@
   </span>
                                  </div>
                               </div>
-                                 <div class="rowSlider"  ng-repeat="annee in  ['2017', '2020', '2025', '2030', '2040', '2050', '2060', '2070']">
+                                 <div class="rowSlider"  ng-repeat="annee in  years">
                                      <div>
                                     <div class="cell cellYear">{{annee}}</div>
                                     <div class="cell cellSlideMoins">
-                                       <md-button ng-class="annee==2017 ? 'hideButton' : ''" ng-click="slideMoins(annee,'RAM');" aria-label="label">
+                                       <md-button ng-class="annee==2018 ? 'hideButton' : ''" ng-click="slideMoins(annee,'RAM');" aria-label="label">
                                           <md-icon class="" md-svg-icon="svg/moins.svg"></md-icon>
                                        </md-button>
                                     </div>
                                     <div class="cell cellSlider">
-                                       <md-slider ng-class="annee==2017 ? 'hideCursor' : ''" ng-disabled="annee==2017" md-discrete ng-change="calculInchange(annee, 'RAM');" ng-model="sliderRAM[annee]" min="{{sliderConf.RAM.min}}" max="{{sliderConf.RAM.max}}"  step="0.1" aria-label="blue" id="sliderRAM-{{annee}}" class="md-primary">
+                                       <md-slider ng-class="annee==2018 ? 'hideCursor' : ''" ng-disabled="annee==2018" md-discrete ng-change="calculInchange(annee, 'RAM');" ng-model="sliderRAM[annee]" min="{{sliderConf.RAM.min}}" max="{{sliderConf.RAM.max}}"  step="0.1" aria-label="blue" id="sliderRAM-{{annee}}" class="md-primary">
                                        </md-slider>
                                     </div>
                                     <div class="cell cellSlidePlus">
-                                       <md-button ng-class="annee==2017 ? 'hideButton' : ''" ng-click="slidePlus(annee, 'RAM');" aria-label="label">
+                                       <md-button ng-class="annee==2018 ? 'hideButton' : ''" ng-click="slidePlus(annee, 'RAM');" aria-label="label">
                                           <md-icon class="" md-svg-icon="svg/plus.svg"></md-icon>
                                        </md-button>
                                     </div>
