@@ -161,74 +161,57 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     $scope.parseDataJson = function() {
         var scenario = $scope.iface.scenario;
         angular.forEach($scope.dataProj.A[scenario], function(val, key) {
+            var round = Math.round(val * 10) / 10;
+
+            if ($scope.years.indexOf(key) < 0) {
+                return
+            }
 
             if ($scope.isUsed(key, 'AMDR') !== true) {
-                var round = Math.round(val * 10) / 10;
                 $scope.sliderAMDR[key] = round;
-                $scope.slideDiff.A[key] = {};
-                $scope.slideDiff.A[key].val = parseFloat(val) - Math.floor(val * 10) / 10;
-                $scope.slideDiff.A[key].sign = ((round > val) ? '+' : '-');
             } else {
-
                 var min = $scope.sliderConf.AMDR.min;
                 var max = $scope.sliderConf.AMDR.max;
 
-                var round = Math.round(val * 10) / 10;
                 var distMark = ((round - min) * 100) / (max - min);
                 distMark = parseFloat(parseFloat(distMark).toFixed(1));
                 angular.element(document.querySelector('#sliderAMDR-' + key + ' .rect')).css('left', distMark + '%');
-
             }
-
         });
 
         angular.forEach($scope.dataProj.T[scenario], function(val, key) {
+            var round = Math.round(val * 1000) / 10;
+
+            if ($scope.years.indexOf(key) < 0) {
+                return
+            }
 
             if ($scope.isUsed(key, 'TPG') !== true) {
-                var round = Math.round(val * 1000) / 10;
-
                 $scope.sliderTPG[key] = round;
-                $scope.slideDiff.TPG[key] = {};
-                $scope.slideDiff.TPG[key].val = parseFloat(val) - Math.floor(val * 1000) / 1000;
-
-                $scope.slideDiff.TPG[key].sign = ((round > val * 100) ? '+' : '-');
             } else {
-
                 var min = $scope.sliderConf.TPG.min;
                 var max = $scope.sliderConf.TPG.max;
 
-                var round = Math.round(val * 1000) / 10;
                 var distMark = ((round - min) * 100) / (max - min);
                 distMark = parseFloat(parseFloat(distMark).toFixed(1));
 
                 angular.element(document.querySelector('#sliderTPG-' + key + ' .rect')).css('left', distMark + '%');
-
             }
-
         });
 
         angular.forEach($scope.dataProj.P[scenario], function(val, key) {
+            var round = Math.round(val * 1000) / 10;
 
             if ($scope.isUsed(key, 'RAM') !== true) {
-                var round = Math.round(val * 1000) / 10;
-
                 $scope.sliderRAM[key] = round;
-                $scope.slideDiff.RAM[key] = {};
-                $scope.slideDiff.RAM[key].val = parseFloat(val) - Math.floor(val * 1000) / 1000;
-                $scope.slideDiff.RAM[key].sign = ((round > val * 100) ? '+' : '-');
             } else {
-
                 var min = $scope.sliderConf.RAM.min;
                 var max = $scope.sliderConf.RAM.max;
 
-                var round = Math.round(val * 1000) / 10;
                 var distMark = ((round - min) * 100) / (max - min);
                 distMark = parseFloat(parseFloat(distMark).toFixed(1));
-
                 angular.element(document.querySelector('#sliderRAM-' + key + ' .rect')).css('left', distMark + '%');
-
             }
-
         });
 
         angular.element(document).ready(function() {
@@ -314,12 +297,21 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     }
 
     $scope.calcul = function() {
-
-        var Ts = $scope.sliderTPG;
-        var As = $scope.sliderAMDR;
-        var Ps = $scope.sliderRAM;
-
         var scenario = $scope.iface.scenario;
+        var years = [0].concat($scope.years)
+        var TsScale = d3.scaleLinear(years, [0].concat(Object.keys($scope.sliderTPG).map(function(k) { return $scope.sliderTPG[k]/100 - $scope.dataProj.T[scenario][k] })))
+        var AsScale = d3.scaleLinear(years, [0].concat(Object.keys($scope.sliderAMDR).map(function(k) { return $scope.sliderAMDR[k] - $scope.dataProj.A[scenario][k] })))
+        var PsScale = d3.scaleLinear(years, [0].concat(Object.keys($scope.sliderRAM).map(function(k) { return $scope.sliderRAM[k]/100 - $scope.dataProj.P[scenario][k] })))
+        var Ts = function(key) {
+            return (TsScale(key) + $scope.dataProj.T[scenario][key])
+        }
+        var As = function(key) {
+            return (AsScale(key) + $scope.dataProj.A[scenario][key])
+        }
+        var Ps = function(key) {
+            return (PsScale(key) + $scope.dataProj.P[scenario][key])
+        }
+
         var deferred = $q.defer();
         var promise = deferred.promise;
         promise.then(function() {
@@ -362,26 +354,9 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
                 var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
 
-                var AS = Number(As[x]);
-                if ($scope.slideDiff.A[x].sign == "+") {
-                    AS = Number(AS - 0.1) + Number($scope.slideDiff.A[x].val);
-                } else {
-                    AS += Number($scope.slideDiff.A[x].val);
-                }
-
-                var TS = Number(Ts[x]);
-                if ($scope.slideDiff.TPG[x].sign == "+") {
-                    TS = (Number(TS - 0.1).toFixed(1)) / 100 + Number($scope.slideDiff.TPG[x].val);
-                } else {
-                    TS = TS / 100 + Number($scope.slideDiff.TPG[x].val);
-                }
-
-                var PS = Number(Ps[x]);
-                if ($scope.slideDiff.RAM[x].sign == "+") {
-                    PS = (Number(PS - 0.1).toFixed(1)) / 100 + Number($scope.slideDiff.RAM[x].val);
-                } else {
-                    PS = PS / 100 + Number($scope.slideDiff.RAM[x].val);
-                }
+                var AS = As(x);
+                var TS = Ts(x);
+                var PS = Ps(x);
 
                 //console.log(NR, NC, PDP, T, G, B, P, TCR, TCS, A, DP, CNV, resS0)
                 var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
