@@ -2,10 +2,6 @@
 	color: white !important;
 }*/
 
-header {
-	width: 768px;
-}
-
 #mdButtonShow5:hover .ng-scope{
 	color: white !important;
 }
@@ -152,7 +148,7 @@ md-tabs.md-dynamic-height md-tabs-content-wrapper {
 
 #step1 {
 
-	background-color: rgb(103, 131, 204);
+	background-color: rgb(103, 131, 2);
 	padding: 5px;
 }
 
@@ -165,7 +161,7 @@ md-tabs.md-dynamic-height md-tabs-content-wrapper {
 	margin-left: 8px;
 }
 #step2 {
-	background-color: rgb(103, 131, 204);
+	background-color: rgb(103, 131, 2);
 	    padding: 5px;
 }
 #step2 .md-tab {
@@ -261,7 +257,7 @@ top: 4px;
 }
 
  header {
-	background-color: rgb(103, 131, 204);
+	background-color: rgb(103, 131, 2);
 	color: white;
 	margin-top: 10px;
     margin-left: 15px;
@@ -449,7 +445,6 @@ width: 50%;
     padding-top: 3px !important;
     border: 1px solid rgba(0, 0, 0, 0.17);
 	font-size: 11pt;
-    max-height:72px;
     overflow:scroll;
     text-overflow: ellipsis;
     overflow-x: hidden;
@@ -844,7 +839,7 @@ md-option{
 
 
 .md-sidenav-left {
-	background-color : rgb(103, 131, 204);
+	background-color : rgb(103, 131, 2);
 }
 
 section {
@@ -1145,11 +1140,8 @@ a.md-button.md-accent, .md-button.md-accent{
 header{
 	margin-right:0px !important;
 }
-.rowSB {
-	max-height: 70px;
-	}
 
-	 header > h1{
+ header > h1{
 	margin-top: 6px;
 	font-weight: bold;
 	font-size: 15pt;
