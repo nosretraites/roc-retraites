@@ -202,6 +202,10 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         angular.forEach($scope.dataProj.P[scenario], function(val, key) {
             var round = Math.round(val * 1000) / 10;
 
+            if ($scope.years.indexOf(key) < 0) {
+                return
+            }
+
             if ($scope.isUsed(key, 'RAM') !== true) {
                 $scope.sliderRAM[key] = round;
             } else {
