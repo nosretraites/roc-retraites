@@ -307,6 +307,12 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     $scope.calcul = function() {
         var scenario = $scope.iface.scenario;
         var years = [0].concat($scope.years)
+        var allyears = d3.range($scope.dateArchive, $scope.dateEndInt + 1);
+        var growth = d3.scaleLinear(allyears, allyears.reduce(function(accum) {
+            accum.push(accum[accum.length-1] * 1.01)
+            return accum;
+        }, [1]));
+
         var TsScale = d3.scaleLinear(years, [0].concat(Object.keys($scope.sliderTPG).map(function(k) { return $scope.sliderTPG[k]/100 - $scope.dataProj.T[scenario][k] })))
         var AsScale = d3.scaleLinear(years, [0].concat(Object.keys($scope.sliderAMDR).map(function(k) { return $scope.sliderAMDR[k] - $scope.dataProj.A[scenario][k] })))
         var PsScale = d3.scaleLinear(years, [0].concat(Object.keys($scope.sliderRAM).map(function(k) { return $scope.sliderRAM[k]/100 - $scope.dataProj.P[scenario][k] })))
@@ -370,6 +376,8 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var TS = Ts(x);
                 var PS = Ps(x);
 
+                var g = growth(x);
+
                 //console.log(NR, NC, PDP, T, G, B, P, TCR, TCS, A, DP, CNV, resS0)
                 var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
 
@@ -395,11 +403,11 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 $scope.disp.PS[1][cpt] = ps0;
                 $scope.disp.PS[0][cpt] = ps1;
 
-                $scope.disp.PN[1][cpt] = rn0;
-                $scope.disp.PN[0][cpt] = rn1;
+                $scope.disp.PN[1][cpt] = g * rn0;
+                $scope.disp.PN[0][cpt] = g * rn1;
 
-                $scope.disp.SN[1][cpt] = sn0;
-                $scope.disp.SN[0][cpt] = sn1;
+                $scope.disp.SN[1][cpt] = g * sn0;
+                $scope.disp.SN[0][cpt] = g * sn1;
 
                 $scope.disp.S[1][cpt] = resS0;
                 $scope.disp.S[0][cpt] = resS1;
