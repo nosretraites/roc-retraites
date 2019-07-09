@@ -19,6 +19,7 @@
 <meta property="og:locale" content="fr_FR" />
 <meta property="og:site_name" content="www.cor-retraites.fr" />
       <script src="js/Chart.js"></script>
+      <script src="js/plotly-latest.min.js"></script>
       <script src="js/angular.js"></script>
       <script src="js/angular-chart.js"></script>
       <script src="js/ui-grid.js"></script>
@@ -261,6 +262,26 @@
                         idx="yearIdx"
                         years="years"
                      ></tab-result>
+                     <tab-result
+                        title="'Salaire net (SN)'"
+                        data="disp.SN"
+                        labels="labels"
+                        series="series"
+                        tooltip="'TODO.'"
+                        idx="yearIdx"
+                        years="years"
+                     ></tab-result>
+                     <tab-result
+                        title="'Pension nette (PN)'"
+                        data="disp.PN"
+                        labels="labels"
+                        series="series"
+                        tooltip="'TODO.'"
+                        idx="yearIdx"
+                        years="years"
+                     ></tab-result>
+                     <div id="test"></div>
+
                   </div>
                   <h2 class="subtitleMain">
                      Visualisez les données brutes

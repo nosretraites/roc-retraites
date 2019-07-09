@@ -87,6 +87,8 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
 
     $scope.disp.PS = [];
+    $scope.disp.PN = [];
+    $scope.disp.SN = [];
 
     $scope.labels = [];
     $scope.labelsS = [];
@@ -120,6 +122,8 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         RNV: {},
         REV: {}
     };
+
+
 
     function prepareLabels(labels) {
         return labels.map(k => parseInt(k) % 5 == 0 ? k : '');
@@ -334,6 +338,10 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
             $scope.disp.PS[0] = [];
             $scope.disp.PS[1] = [];
+            $scope.disp.PN[0] = [];
+            $scope.disp.PN[1] = [];
+            $scope.disp.SN[0] = [];
+            $scope.disp.SN[1] = [];
 
             $scope.yearIdx = {};
 
@@ -368,10 +376,14 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var resS1 = B * (TS - ((NR - G * (AS - A)) / (NC + 0.5 * G * (AS - A)) * (PS + DP)));
 
                 // Calcul du rapport entre le niveau de vie des retraités et celui de l'ensemble de la population, simulation à partir des cibles fournies par l'utilisateur.
-                var ps0 = P * ((1 - TCR) / (1 - TCS));
+                var sn0 = (1 - TCS);
+                var rn0 = P * (1 - TCR);
+                var ps0 = rn0 / sn0;
                 var rnv0 = ps0 * CNV;  // A legislation inchangée
 
-                var ps1 = PS * (1 - TCR) / (1 - (TCS + (TS - (T / 100))));
+                var sn1 = 1 - (TCS + (TS - (T / 100)));
+                var rn1 = PS * (1 - TCR);
+                var ps1 =  rn1 / sn1;
                 var rnv1 = ps1 * CNV; //Avec vos cibles
 
                 var ind = Math.round(Number(x) + Number(0.5) - A);
@@ -382,6 +394,13 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
                 $scope.disp.PS[1][cpt] = ps0;
                 $scope.disp.PS[0][cpt] = ps1;
+
+                $scope.disp.PN[1][cpt] = rn0;
+                $scope.disp.PN[0][cpt] = rn1;
+
+                $scope.disp.SN[1][cpt] = sn0;
+                $scope.disp.SN[0][cpt] = sn1;
+
                 $scope.disp.S[1][cpt] = resS0;
                 $scope.disp.S[0][cpt] = resS1;
                 $scope.disp.RNV[1][cpt] = rnv0;
@@ -393,6 +412,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
             }
         })
+
         deferred.resolve();
     }
 
@@ -534,6 +554,26 @@ DialogCtrl.$inject = ['$scope', '$mdDialog'];
 lineApp.controller('LineCtrl', LineCtrl);
 
 lineApp.directive('tabResult', function() {
+
+
+    var xs = d3.range(2000,2070)
+
+    var trace1 = {
+      x: xs,
+      y: xs.map(_ => Math.random()),
+      type: 'scatter',
+      name: 'One 1'
+    };
+
+    var trace2 = {
+      x: xs,
+      y: xs.map(_ => Math.random()),
+      type: 'scatter',
+      name: 'Two 2'
+    };
+
+    var data = [trace1, trace2];
+
     return {
         restrict: 'E',
         templateUrl: 'partials/tabResult.html',
@@ -547,6 +587,15 @@ lineApp.directive('tabResult', function() {
             years: '=',
             idx: '=',
             coef: '='
+        },
+        link: function(scope, element, attributes, ctrl) {
+            //console.log(element)
+            /*Plotly.newPlot(element[0], data, { responsive: true});
+
+            console.log('here');//var abtesting = ABTestingService.getEnvironment();
+            scope.$watch('title', function(v) {
+                console.log(v);
+            })//*/
         }
     };
 });
