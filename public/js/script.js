@@ -89,12 +89,14 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     $scope.disp.PS = [];
     $scope.disp.PN = [];
     $scope.disp.SN = [];
+    $scope.disp.P = [];
+    $scope.disp.T = [];
 
     $scope.labels = [];
     $scope.labelsS = [];
     $scope.labelsRNV = [];
     $scope.listeLines = ['REV', 'S', 'RNV'];
-    $scope.series = ['Votre simulation', 'Législation inchangée'];
+    $scope.series = ['Législation inchangée', 'Votre simulation'];
     $scope.iface = {};
     $scope.iface.scenario = "1";
 
@@ -143,6 +145,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
             NC: { name: 'Nombre de personnes en emploi (ou nombre de cotisants)' },
             G: { name: 'Effectif moyen d’une génération arrivant aux âges de la retraite' },
             PdP: { name: 'Autres dépenses de retraite rapportées au nombre de retraités de droit direct, en % du revenu d’activité brut moyen' },
+            dP: { name: 'Autres dépenses de retraite rapportées au nombre de retraités de droit direct, en % du revenu d’activité brut moyen 2' },
             TCR: { name: 'Taux des prélèvements sociaux sur les pensions de retraite' },
             TCS: { name: 'Taux des prélèvements sociaux sur les salaires et revenus d’activité' },
             CNV: { name: 'Coefficient pour passer du ratio « pension/salaire nets » au ratio des niveaux de vie' },
@@ -350,6 +353,11 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
             $scope.disp.SN[0] = [];
             $scope.disp.SN[1] = [];
 
+            $scope.disp.P[0] = [];
+            $scope.disp.P[1] = [];
+            $scope.disp.T[0] = [];
+            $scope.disp.T[1] = [];
+
             $scope.yearIdx = {};
 
             for (var annee = $scope.dateArchive; annee <= $scope.dateEndInt; annee++) {
@@ -360,7 +368,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var NR = parseFloat(parseFloat(dataProj.NR[scenario][x]).toFixed(8));
                 var NC = parseFloat(parseFloat(dataProj.NC[scenario][x]).toFixed(8));
                 var PDP = parseFloat(dataProj.PdP[scenario][x]);
-                var T = parseFloat(dataProj.T[scenario][x] * 100);
+                var T = parseFloat(dataProj.T[scenario][x]);
                 var G = parseFloat(dataProj.G[scenario][x]);
                 var B = parseFloat(dataProj.B[scenario][x]);
 
@@ -371,18 +379,20 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var DP = parseFloat(dataProj.dP[scenario][x]);
                 var CNV = parseFloat(dataProj.CNV[scenario][x]);
 
-                var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
+                var resS0 = parseFloat(B * (T - (NR / NC) * PDP));
 
                 var AS = As(x);
                 var TS = Ts(x);
                 var PS = Ps(x);
 
-                var g = growth(x);
+                var resSE = resS0;
 
-                //console.log(NR, NC, PDP, T, G, B, P, TCR, TCS, A, DP, CNV, resS0)
-                var resS0 = parseFloat(B * (parseFloat(T / 100) - (NR / NC) * PDP));
+                var TRN = 0.6;
+                var nb = ((NR - G * (AS - A)) / (NC + 0.5 * G * (AS - A)));
+                PS = TRN * (1 - TCS + T - resSE/B - nb*DP) / (1 - TCR + TRN*nb)
+                TS = resSE/B + nb*(PS + DP)
 
-                var resS1 = B * (TS - ((NR - G * (AS - A)) / (NC + 0.5 * G * (AS - A)) * (PS + DP)));
+                var resS1 = B * (TS - nb * (PS + DP));
 
                 // Calcul du rapport entre le niveau de vie des retraités et celui de l'ensemble de la population, simulation à partir des cibles fournies par l'utilisateur.
                 var sn0 = (1 - TCS);
@@ -390,7 +400,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var ps0 = rn0 / sn0;
                 var rnv0 = ps0 * CNV;  // A legislation inchangée
 
-                var sn1 = 1 - (TCS + (TS - (T / 100)));
+                var sn1 = 1 - (TCS + (TS - T));
                 var rn1 = PS * (1 - TCR);
                 var ps1 =  rn1 / sn1;
                 var rnv1 = ps1 * CNV; //Avec vos cibles
@@ -401,26 +411,35 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var rev0 = (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - A)] - A) / (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - A)]);
                 var rev1 = (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - AS)] - AS) / (60 + dataProj.EV[scenario][Math.round(Number(x) + Number(0.5) - AS)]);
 
-                $scope.disp.PS[1][cpt] = ps0;
-                $scope.disp.PS[0][cpt] = ps1;
+                $scope.disp.PS[0][cpt] = ps0;
+                $scope.disp.PS[1][cpt] = ps1;
 
-                $scope.disp.PN[1][cpt] = g * rn0;
-                $scope.disp.PN[0][cpt] = g * rn1;
+                var gr = growth(x);
 
-                $scope.disp.SN[1][cpt] = g * sn0;
-                $scope.disp.SN[0][cpt] = g * sn1;
+                $scope.disp.PN[0][cpt] = gr * rn0;
+                $scope.disp.PN[1][cpt] = gr * rn1;
 
-                $scope.disp.S[1][cpt] = resS0;
-                $scope.disp.S[0][cpt] = resS1;
-                $scope.disp.RNV[1][cpt] = rnv0;
-                $scope.disp.RNV[0][cpt] = rnv1;
-                $scope.disp.REV[1][cpt] = parseFloat(rev0);
-                $scope.disp.REV[0][cpt] = parseFloat(rev1);
+                $scope.disp.SN[0][cpt] = gr * sn0;
+                $scope.disp.SN[1][cpt] = gr * sn1;
+
+                $scope.disp.P[0][cpt] = P;
+                $scope.disp.P[1][cpt] = PS;
+
+                $scope.disp.T[0][cpt] = T;
+                $scope.disp.T[1][cpt] = TS;
+
+                $scope.disp.S[0][cpt] = resS0;
+                $scope.disp.S[1][cpt] = resS1;
+                $scope.disp.RNV[0][cpt] = rnv0;
+                $scope.disp.RNV[1][cpt] = rnv1;
+                $scope.disp.REV[0][cpt] = parseFloat(rev0);
+                $scope.disp.REV[1][cpt] = parseFloat(rev1);
 
                 cpt++;
 
             }
         })
+
 
         deferred.resolve();
     }
