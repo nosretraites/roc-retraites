@@ -106,12 +106,12 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
     // Variable avec les scénarios utilisés
     $scope.iface.scenarios = [
-        {"value":"1","label":{"salaire":"+ 1,8 %","chomage":"7 %"}},
-        {"value":"2","label":{"salaire":"+ 1,5 %","chomage":"7 %"}},
-        {"value":"3","label":{"salaire":"+ 1,3 %","chomage":"7 %"}},
-        {"value":"4","label":{"salaire":"+ 1 %","chomage":"7 %"}},
-        {"value":"5","label":{"salaire":"+ 1,8 %","chomage":"4,5 %"}},
-        {"value":"6","label":{"salaire":"+ 1 %","chomage":"10 %"}}
+        {"value":"1","label":{"salaire":"+ 1,8 %","chomage":"7 %"}, salaire: 0.018},
+        {"value":"2","label":{"salaire":"+ 1,5 %","chomage":"7 %"}, salaire: 0.015},
+        {"value":"3","label":{"salaire":"+ 1,3 %","chomage":"7 %"}, salaire: 0.013},
+        {"value":"4","label":{"salaire":"+ 1 %","chomage":"7 %"}, salaire: 0.01},
+        {"value":"5","label":{"salaire":"+ 1,8 %","chomage":"4,5 %"}, salaire: 0.018},
+        {"value":"6","label":{"salaire":"+ 1 %","chomage":"10 %"}, salaire: 0.01}
 
       ];
 
@@ -306,10 +306,11 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
     $scope.calcul = function() {
         var scenario = $scope.iface.scenario;
+        var meta = $scope.iface.scenarios.find(function(s) { return s.value === scenario})
         var years = [0].concat($scope.years)
         var allyears = d3.range($scope.dateArchive, $scope.dateEndInt + 1);
         var growth = d3.scaleLinear(allyears, allyears.reduce(function(accum) {
-            accum.push(accum[accum.length-1] * 1.01)
+            accum.push(accum[accum.length-1] * (1 + meta.salaire))
             return accum;
         }, [1]));
 
