@@ -1014,7 +1014,7 @@ button.md-raised.md-primary.resetValues.md-button.md-default-theme:hover {
 
 
 
-md-tab-content:nth-child(1) md-slider .md-thumb-text:after {
+.ageTab md-slider .md-thumb-text:after {
 	content: " ans";
 	font-family: "Calibri",RobotoDraft,Roboto,"Helvetica Neue",sans-serif;
 }
