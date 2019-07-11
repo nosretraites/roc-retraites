@@ -92,7 +92,7 @@
   </span>
                               </div>
 </div>
-                                 <div class="rowSlider"  ng-repeat="annee in  years">
+                                 <div class="rowSlider ageTab"  ng-repeat="annee in  years">
                                      <div>
                                     <div class="cell cellYear">{{annee}}</div>
                                     <div class="cell cellSlideMoins">
@@ -160,7 +160,7 @@
                               </md-tab-label>
                               <md-tab-body>
                               <div class="tabBodyHeader">
-                                 <div class="cell"> <p class="tabTitle">Niveau des pensions par rapport aux salaires</p>
+                                 <div class="cell"> <p class="tabTitle">Niveau des pensions brutes par rapport aux salaires bruts</p>
                                  </div>
                                  <div class="cell">
                                <span>
@@ -194,6 +194,52 @@
                            </md-tab>
                         </md-tabs>
                         <md-button aria-label="label" ng-click="resetValues();" class="md-raised md-primary resetValues">Réinitialiser les valeurs</md-button>
+
+                        <md-button aria-label="label" ng-click="toggleE()" ng-if="! equilibrer" class="md-raised md-primary">Équilibrer avec remplacement</md-button>
+                        <md-button aria-label="label" ng-click="toggleE()" ng-if="equilibrer" class="md-raised md-primary">Désactiver l'équilibre auto</md-button>
+                        <md-tabs>
+                           <md-tab>
+                              <md-tab-label>
+                              <span class="titleTab">Pension nette</span>
+                                 <md-icon md-svg-icon="svg/3.svg"></md-icon>
+                              </md-tab-label>
+                              <md-tab-body>
+                              <div class="tabBodyHeader">
+                                 <div class="cell"> <p class="tabTitle">Niveau des pensions nettes par rapport aux salaires nets</p>
+                                 </div>
+                                 <div class="cell">
+                               <span>
+<md-button class=" md-mini md-accent" ng-mouseenter="show4=true" ng-mouseleave="show4=false">
+   <md-icon  md-svg-icon="svg/info.svg"></md-icon>
+  <md-tooltip md-visible="show4">Il rapporte la pension moyenne des retraités au salaire moyen des personnes en emploi. Pensions et salaires sont calculés bruts de prélèvements sociaux.</md-tooltip>
+</md-button>
+  </span>
+                                 </div>
+                              </div>
+                                 <div class="rowSlider">
+                                     <div>
+                                    <div class="cell cellYear">Valeur
+                                    {{sliderTRN[O]}}
+                                 </div>
+                                    <div class="cell cellSlideMoins">
+                                       <md-button ng-click="slideMoins(0,'TRN');" aria-label="label">
+                                          <md-icon class="" md-svg-icon="svg/moins.svg"></md-icon>
+                                       </md-button>
+                                    </div>
+                                    <div class="cell cellSlider">
+                                       <md-slider md-discrete ng-change="calculInchange(0, 'TRN');" ng-model="sliderTRN[0]" min="{{sliderConf.TRN.min}}" max="{{sliderConf.TRN.max}}"  step="0.1" aria-label="blue" id="sliderTRN-{{annee}}" class="md-primary">
+                                       </md-slider>
+                                    </div>
+                                    <div class="cell cellSlidePlus">
+                                       <md-button ng-click="slidePlus(0, 'TRN');" aria-label="label">
+                                          <md-icon class="" md-svg-icon="svg/plus.svg"></md-icon>
+                                       </md-button>
+                                    </div>
+                                 </div>
+                              </div>
+                              </md-tab-body>
+                           </md-tab>
+                        </md-tabs>
                      </div>
                   </div>
                </md-content>

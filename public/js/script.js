@@ -51,11 +51,16 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         min: 30,
         max: 65
     };
+    $scope.sliderConf.TRN = {
+        min: 0,
+        max: 100
+    };
 
     $scope.slideMove = {};
     $scope.slideMove.AMDR = {};
     $scope.slideMove.TPG = {};
     $scope.slideMove.RAM = {};
+    $scope.slideMove.TRN = {};
 
     $scope.arr = [];
     $scope.slideDiff = {};
@@ -81,6 +86,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     $scope.sliderAMDR = {};
     $scope.sliderTPG = {};
     $scope.sliderRAM = {};
+    $scope.sliderTRN = {};
     $scope.copyAMDR = {};
     $scope.copyTPG = {};
     $scope.copyRAM = {};
@@ -105,6 +111,12 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     $scope.dateEndInt = 2070;
     $scope.dateArchive = 2005;
     $scope.currentReportUrl = "http://www.cor-retraites.fr/simulateur/img/pdf/doc-4004.pdf";
+
+    $scope.equilibrer = false;
+    $scope.toggleE = function() {
+        $scope.equilibrer = ! $scope.equilibrer;
+        $scope.calcul();
+    }
 
     // Variable avec les scénarios utilisés
     $scope.iface.scenarios = [
@@ -241,6 +253,9 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
             });
 
         });
+
+        console.log('h')
+        $scope.sliderTRN[0] = 61.0
 
     }
 
@@ -385,12 +400,13 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
                 var TS = Ts(x);
                 var PS = Ps(x);
 
-                var resSE = resS0;
-
-                var TRN = 0.6;
                 var nb = ((NR - G * (AS - A)) / (NC + 0.5 * G * (AS - A)));
-                PS = TRN * (1 - TCS + T - resSE/B - nb*DP) / (1 - TCR + TRN*nb)
-                TS = resSE/B + nb*(PS + DP)
+                if ($scope.equilibrer) {
+                    var resSE = resS0;
+                    var TRN = $scope.sliderTRN[0]/100.0;
+                    PS = TRN * (1 - TCS + T - resSE/B - nb*DP) / (1 - TCR + TRN*nb)
+                    TS = resSE/B + nb*(PS + DP)
+                }
 
                 var resS1 = B * (TS - nb * (PS + DP));
 
@@ -470,6 +486,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         $scope.slideMove.AMDR = {};
         $scope.slideMove.TPG = {};
         $scope.slideMove.RAM = {};
+        $scope.slideMove.TRN = {};
 
         angular.forEach(angular.element(document.querySelectorAll('.slideUsed')), function(e1) {
 
@@ -480,13 +497,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
     $scope.slideMoins = function(x, slider) {
         $scope.used(x, slider);
-        if (slider == "AMDR") {
-            var slider = $scope.sliderAMDR;
-        } else if (slider == "TPG") {
-            var slider = $scope.sliderTPG;
-        } else if (slider == "RAM") {
-            var slider = $scope.sliderRAM;
-        }
+        var slider = $scope['slider' + slider];
         slider[x] = slider[x] - 0.1;
 
         $scope.calcul();
@@ -506,19 +517,12 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
     }
 
-    $scope.slidePlus = function(x, slider) {
-        $scope.used(x, slider);
-        if (slider == "AMDR") {
-            var slider = $scope.sliderAMDR;
-        } else if (slider == "TPG") {
-            var slider = $scope.sliderTPG;
-        } else if (slider == "RAM") {
-            var slider = $scope.sliderRAM;
-        }
+    $scope.slidePlus = function(x, sliderName) {
+        $scope.used(x, sliderName);
+        var slider = $scope['slider' + sliderName];
         slider[x] = slider[x] + 0.1;
 
         $scope.calcul();
-
     }
 
     $scope.calculIntermediaire = function(index, x) {
@@ -533,6 +537,7 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
 
         $scope.resetClass();
         $scope.parseDataJson();
+
         $scope.calcul();
     }
 
