@@ -460,10 +460,6 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         deferred.resolve();
     }
 
-    $scope.mailTo = function(){
-        $window.location = "mailto:secretariat@cor-retraites.fr";
-    }
-
     $scope.range = function(min, max, step) {
         step = step || 1;
         var input = [];
@@ -473,11 +469,6 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
     $scope.getDate = function() {
         var date = new Date();
         return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-    }
-
-    $scope.historyBack = function() {
-
-        window.location = 'http://www.cor-retraites.fr';
     }
 
     $scope.resetClass = function() {
@@ -539,17 +530,6 @@ function LineCtrl($scope, $http, $q, $window, $mdDialog){
         $scope.parseDataJson();
 
         $scope.calcul();
-    }
-
-    $scope.share = function() {
-        var fbLink = 'http://www.facebook.com/sharer.php?u=' + window.location.href + ' ';
-        window.open(fbLink, '_blank');
-    }
-
-    $scope.tweet = function() {
-        var twtLink = 'http://twitter.com/home?status=Simulez l’impact de réformes sur les finances du système de retraite et la situation des retraités http://goo.gl/j4Wbzy';
-        window.open(twtLink, '_blank');
-
     }
 
     $scope.showAdvanced = function(ev) {
@@ -625,7 +605,6 @@ lineApp.directive('tabResult', function() {
             //console.log(element)
             /*Plotly.newPlot(element[0], data, { responsive: true});
 
-            console.log('here');//var abtesting = ABTestingService.getEnvironment();
             scope.$watch('title', function(v) {
                 console.log(v);
             })//*/

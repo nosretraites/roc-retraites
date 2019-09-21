@@ -8,12 +8,7 @@
 <meta name="twitter:description" content="Simulez l’impact de réformes sur le solde financier du système de retraite français et la situation des retraités actuels et futurs." />
 <meta name="description" content="Un simulateur pour visualiser l'impact de réformes sur le système de retraite et la situation des retraités" />
 <meta name="robots" content="noarchive" />
-<meta name="twitter:url" content="http://www.cor-retraites.fr/simulateur/" />
-<meta name="twitter:image"  content="http://www.cor-retraites.fr/simulateur/img/facebook_Partage.jpg" />
-<meta name="twitter:title" content="Pilotez le système de retraite avec le simulateur du COR !" />
-<meta property="og:image" content="http://www.cor-retraites.fr/simulateur/img/facebook_Partage.jpg" />
-<meta property="og:url" content="http://www.cor-retraites.fr/simulateur/" />
-<meta property="og:title" content="Pilotez le système de retraite avec le simulateur du COR !" />
+<meta property="og:title" content="Pilotez le système de retraite avec le simulateur du COR revu par le collectif citoyen Nos Retraites !" />
 <meta property="og:description" content="Simulez l’impact de réformes sur le solde financier du système de retraite français et la situation des retraités actuels et futurs." />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="fr_FR" />
@@ -34,15 +29,15 @@
    </head>
    <body>
       <div ng-controller="LineCtrl" layout="column" data-ng-init="init()" class="container">
-         <div style="text-align:center;width:100%;height:100%;background-color:white;" class="loader">
+         <div style="text-align:center;width:100%;height:100%;background-color:rgb(255, 179, 183);color:rgb(80, 93, 117);" class="loader">
             <p style="margin-top:25px;">Le chargement de la page est en cours, merci pour votre patience.</p>
-             <img  src="img/loader.gif" />
+             <img  src="img/logo collectif.png" />
          </div>
          <section layout="row" style="display:none;" class="main">
             <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="1">
                <md-content layout-padding >
                   <div id="areaLogoCOR">
-                     <img src="img/Logo_COR.svg" height="87" />
+                     <img src="img/logo collectif.png"/>
                   </div>
                   <div id="step1">
                      <div class="headerStep">
@@ -254,7 +249,7 @@
                      Cette version a été revue par un collectif citoyen pour mettre en évidence les vrais enjeux autour des retraites et de leur réforme en 2019&nbsp;!
                   </p>
                   <p>
-                     Nous avons récupéré la version en ligne sur le site du COR et l'avons modifié pour y ajouter
+                     Nous avons récupéré <a href="http://www.cor-retraites.fr/simulateur/">la version en ligne sur le site du COR</a> (merci le COR !) et l'avons modifié pour y ajouter&nbsp;:
                      <ul>
                         <li>le ratio pension nette / salaire net (PS) et mettre en évidence la chute dans les années à venir</li>
                         <li>les graphiques des données des différents scénarios pour expliciter l'impact des variations des salaires et du chômage</li>
@@ -367,38 +362,23 @@
                            </div>
                      </div>
                      <div class="rowCell">
-                        <div class="cell"  >
-                           <a href="mailto:secretariat@cor-retraites.fr" target="_blank">
+                        <div class="cell">
+                           <a href="mailto:contact@reformedesretraites.fr" target="_blank">
                               <md-button id="mdButtonShow5" class=" md-mini md-accent" ng-mouseenter="show5=true" ng-mouseleave="show5=false">
                               <md-tooltip md-visible="show5" md-direction="top">Nous portons la plus grande attention à vos retours pour améliorer ce simulateur.</md-tooltip>
-                              <p>Email</p><md-icon class="icoOtherAction" md-svg-icon="svg/4.svg"></md-icon></md-button>
+                              <p>Email</p>
+                              <md-icon class="icoOtherAction" md-svg-icon="svg/4.svg"></md-icon></md-button>
                            </a>
                         </div>
                      </div>
                      <div class="rowCell">
                         <div class="cell">
-                           <a download="cor.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable');"><p>Export</p>
-                           <md-icon class="icoOtherAction" md-svg-icon="svg/5.svg"></md-icon></a>
+                           <a href="https://reformedesretraites.fr" target="_blank">
+                              <p>Retour</p>
+                              <md-icon class="icoOtherAction" md-svg-icon="svg/5.svg"></md-icon></md-button>
+                           </a>
                         </div>
                      </div>
-                     <div class="rowCell">
-                        <div class="cell" class="button raised blue" ng-click="historyBack();">
-                           <p>Retour</p>
-                           <md-icon  class="md-icon-button icoOtherAction" md-svg-icon="svg/6.svg"></md-icon>
-                        </div>
-                     </div>
-                  </div>
-                  <div hide show-lg class="reseauxSociaux">
-                     <div class="rowCell">
-                        <div class="cell">
-                          <md-icon  ng-click="share();" md-svg-icon="svg/F_icon.svg"></md-icon>
-                        </div>
-                    </div>
-                      <div class="rowCell">
-                        <div class="cell">
-                          <md-icon  ng-click="tweet();" id="twitterIcon" class="ng-scope ng-isolate-scope md-default-theme" style="height: 19px; width: 32px; fill:white" md-svg-src="svg/Twitter_Bird.svg"></md-icon>
-                        </div>
-                    </div>
                   </div>
                </div>
             </md-content>
