@@ -31,7 +31,7 @@
       <div ng-controller="LineCtrl" layout="column" data-ng-init="init()" class="container">
          <div style="text-align:center;width:100%;height:100%;background-color:rgb(255, 179, 183);color:rgb(80, 93, 117);" class="loader">
             <p style="margin-top:25px;">Le chargement de la page est en cours, merci pour votre patience.</p>
-             <img  src="img/logo collectif.png" />
+             <img style="max-width:100%" src="img/logo collectif.png"/>
          </div>
          <section layout="row" style="display:none;" class="main">
             <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="1">
@@ -243,16 +243,17 @@
                <div layout="column" layout-fill layout-align="top center">
                   <header>
                     <h1>
-                      Pilotez le système de retraite français avec le simulateur du COR.
+                      📊 Pilotez le système de retraite français&nbsp;!
                   </h1>
+                  <h2>📣 Pas de confusion 📣</h2>
                   <p>
-                     Cette version a été revue par un collectif citoyen pour mettre en évidence les vrais enjeux autour des retraites et de leur réforme en 2019&nbsp;!
+                     Ce simulateur reprend les données de celui du COR et le code associé mais ce site, <strong>militant</strong>, est mis en ligne par <a href="https://reformedesretraites.fr/">le collectif citoyen <i>Nos retraites</i></a> et <strong>n'engage en rien le COR</strong>. Il a été a été revu pour mettre en évidence les vrais enjeux autour des retraites et de leur réforme en 2019&nbsp;! Pour retrouver le simulateur officiel du COR <a target="_blank" href="http://www.cor-retraites.fr/simulateur/">c'est par ici</a>.
                   </p>
                   <p>
-                     Nous avons récupéré <a href="http://www.cor-retraites.fr/simulateur/">la version en ligne sur le site du COR</a> (merci le COR !) et l'avons modifié pour y ajouter&nbsp;:
+                     Nous y avons ajouté&nbsp;:
                      <ul>
-                        <li>le ratio pension nette / salaire net (PS) et mettre en évidence la chute dans les années à venir</li>
-                        <li>les graphiques des données des différents scénarios pour expliciter l'impact des variations des salaires et du chômage</li>
+                        <li>le ratio pension nette / salaire net (PS) et mettre en évidence la chute dans les années à venir 📉</li>
+                        <li>les graphiques des données des différents scénarios pour expliciter l'impact des variations des salaires et du chômage 🔍</li>
                      </ul>
                   </p>
                   </header>
@@ -357,7 +358,7 @@
                   <div hide show-lg class="otherActions">
                      <div class="rowCell">
                         <div class="cell"  ng-click="showAdvanced($event)" flex-sm="100" flex-md="100" flex-gt-md="auto">
-                              <p>Doc</p>
+                              <p>Docs (du COR)</p>
                               <md-icon class="icoOtherAction icoPlus" md-svg-icon="svg/plus.svg"></md-icon>
                            </div>
                      </div>
